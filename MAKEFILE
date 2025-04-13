@@ -1,3 +1,20 @@
-# Запуск тестов через Docker Compose
-ci:
-    docker-compose -f docker-compose.yml up --abort-on-container-exit
+compose-setup:
+	docker-compose run --rm app make setup
+
+compose-test:
+	docker-compose -f docker-compose.yml up --abort-on-container-exit --exit-code-from app
+
+compose-dev:
+	docker-compose up
+
+compose-down:
+	docker-compose down
+
+compose-production-build:
+	docker-compose -f docker-compose.yml build app
+
+compose-production-push:
+	docker-compose -f docker-compose.yml push app
+
+production-run:
+	docker run -p 8080:8080 -e NODE_ENV=development <your-dockerhub-username>/<repository-name> make dev

@@ -1,12 +1,20 @@
-version: '3.8'
-
 services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.production
+    image: iijiatoh1/test:latest
     volumes:
       - ./app:/app
+    environment:
+      NODE_ENV: development
+
+  caddy:
+    image: caddy:2.6.4-alpine
     ports:
-      - "8080:8080"
-    command: make dev
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./services/caddy/Caddyfile:/etc/caddy/Caddyfile
+    depends_on:
+      - app
