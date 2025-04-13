@@ -1,0 +1,3 @@
+# Запуск тестов через Docker Compose
+ci:
+    docker-compose -f docker-compose.yml up --abort-on-container-exit
