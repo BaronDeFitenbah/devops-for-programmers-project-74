@@ -2,7 +2,7 @@ ci: test-db-prepare
 	docker-compose -f docker-compose.yml up --abort-on-container-exit --exit-code-from app
 
 test-db-prepare:
-    docker-compose exec db psql -U postgres -c "CREATE DATABASE IF NOT EXISTS postgres;"
+	docker-compose exec db psql -U postgres -c "CREATE DATABASE IF NOT EXISTS postgres;"
 
 compose-setup:
 	docker-compose run --rm app make setup
