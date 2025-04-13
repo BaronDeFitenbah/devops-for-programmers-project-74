@@ -35,6 +35,3 @@ test:
 
 ci: 
 	npm run build
-
-test: 
-	ci

@@ -13,8 +13,6 @@ compose-test:
 compose-dev:
 	docker-compose up
 
-test: ci
-
 compose-down:
 	docker-compose down
 
