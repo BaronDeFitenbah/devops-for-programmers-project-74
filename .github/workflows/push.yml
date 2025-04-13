@@ -43,9 +43,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Verify project structure
+        run: |
+          pwd
+          ls -la
+          echo "Makefile exists: $(test -f Makefile && echo 'YES' || echo 'NO')"
+
       - name: Set up project
         run: |
-          cd devops-for-programmers-project-74  # переходим в директорию проекта
           ls -la  # для отладки - проверяем содержимое
           cat Makefile  # проверяем что Makefile существует
 
