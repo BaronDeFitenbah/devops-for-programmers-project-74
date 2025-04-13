@@ -65,7 +65,7 @@ jobs:
 
       - name: Run tests
         run: |
-          make compose-test
+          docker-compose -f docker-compose.yml up --abort-on-container-exit --exit-code-from app
 
       - name: Build and push
         run: |

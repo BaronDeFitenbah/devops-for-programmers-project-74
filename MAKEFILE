@@ -23,4 +23,4 @@ compose-production-push:
 	docker-compose -f docker-compose.yml push app
 
 production-run:
-	docker run -p 8080:8080 -e NODE_ENV=development <your-dockerhub-username>/<repository-name> make dev
+	docker run -p 8080:8080 -e NODE_ENV=development iijiatoh1/test:latest make dev
