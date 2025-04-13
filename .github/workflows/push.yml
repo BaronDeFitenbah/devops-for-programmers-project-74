@@ -52,7 +52,7 @@ jobs:
       - name: Set up project
         run: |
           ls -la  # для отладки - проверяем содержимое
-          cat Makefile  # проверяем что Makefile существует
+          cat MAKEFILE  # проверяем что Makefile существует
 
       - name: Set up Docker
         uses: docker/setup-buildx-action@v2
