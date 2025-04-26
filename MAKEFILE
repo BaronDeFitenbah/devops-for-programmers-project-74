@@ -1,26 +1,13 @@
-ci: test-db-prepare
-	docker-compose -f docker-compose.yml up --abort-on-container-exit --exit-code-from app
+setup: prepare-env install
 
-test-db-prepare:
-	docker-compose exec db psql -U postgres -c "CREATE DATABASE IF NOT EXISTS postgres;"
+install:
+	docker-compose run --rm app npm ci
 
-compose-setup:
-	docker-compose run --rm app make setup
-
-compose-test:
-	docker-compose -f docker-compose.yml up --abort-on-container-exit --exit-code-from app
-
-compose-dev:
+start:
 	docker-compose up
 
-compose-down:
-	docker-compose down
+test:
+	docker-compose -f docker-compose.yml up --abort-on-container-exit --exit-code-from app
 
-compose-production-build:
-	docker-compose -f docker-compose.yml build app
-
-compose-production-push:
-	docker-compose -f docker-compose.yml push app
-
-production-run:
-	docker run -p 8080:8080 -e NODE_ENV=development iijiatoh1/test:latest make dev
+prepare-env:
+	cp -n .env.example .env	

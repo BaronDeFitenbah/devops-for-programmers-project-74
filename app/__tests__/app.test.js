@@ -1,41 +1,27 @@
-// @ts-check
-
-import {
-  describe, beforeAll, expect, test, afterAll
-} from '@jest/globals';
-
 import fastify from 'fastify';
-import init from '../server/plugin.js';
-
+import buildApp from '../app.js';
 
 // TODO: сейчас каждый тест оставляет после себя артефакты в БД
 // попытатся использовать транзакции или перед каждым тестом очищать БД
-
-describe('requests', () => {
+describe('server test', () => {
   let app;
 
   beforeAll(async () => {
-    app = fastify({
-      exposeHeadRoutes: false,
-      logger: { target: 'pino-pretty' },
-    });
-    await init(app);
+    app = fastify();
+    await buildApp(app);
   });
 
-  test('GET 200', async () => {
-    const res = await app.inject({
-      method: 'GET',
-      url: app.reverse('root'),
-    });
-    expect(res.statusCode).toBe(200);
+  afterAll(async () => {
+    await app.close();
   });
 
-  test('GET 404', async () => {
-    const res = await app.inject({
+  test('responds with success on request /', async () => {
+    const response = await app.inject({
       method: 'GET',
-      url: '/wrong-path',
+      url: '/',
     });
-    expect(res.statusCode).toBe(404);
+
+    expect(response.statusCode).toBe(200);
   });
 
   test('show articles - GET /articles', async () => {
@@ -58,7 +44,7 @@ describe('requests', () => {
 
   test('create article - POST /articles', async () => {
     const newArticleData = {
-      title: 'Article 1',
+      name: 'Article 1',
       content: 'Article 1 content',
     };
 
@@ -78,7 +64,7 @@ describe('requests', () => {
 
   test('edit article - GET /articles/:id', async () => {
     const newArticleData = {
-      title: 'Article 2',
+      name: 'Article 2',
       content: 'Article 2 content',
     };
 
@@ -102,7 +88,7 @@ describe('requests', () => {
 
   test('update article - PATCH /articles/:id', async () => {
     const newArticleData = {
-      title: 'Article 3',
+      name: 'Article 3',
       content: 'Article 3 content',
     };
 
@@ -117,7 +103,7 @@ describe('requests', () => {
     const newArticle = await app.db.models.Article.findOne({ where: newArticleData });
 
     const updatedArticleData = {
-      title: 'Article updated',
+      name: 'Article updated',
       content: 'Article updated content',
     };
 
@@ -139,7 +125,7 @@ describe('requests', () => {
 
   test('delete article - DELETE /articles/:id', async () => {
     const newArticleData = {
-      title: 'Article 4',
+      name: 'Article 4',
       content: 'Article 4 content',
     };
 
@@ -166,7 +152,7 @@ describe('requests', () => {
 
   test('show article - GET /articles/:id', async () => {
     const newArticleData = {
-      title: 'Article 5',
+      name: 'Article 5',
       content: 'Article 5 content',
     };
 
@@ -186,9 +172,5 @@ describe('requests', () => {
     });
 
     expect(response2.statusCode).toBe(200);
-  });
-
-  afterAll(async () => {
-    await app.close();
   });
 });

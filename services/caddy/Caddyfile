@@ -3,12 +3,10 @@ localhost {
     format json
   }
 
-  # Включаем компрессию
-  encode zstd gzip
 
-  # Используем самоподписанный сертификат для разработки
+  encode zstd
+
   tls internal
 
-  # Проксируем все запросы на наше приложение
   reverse_proxy /* app:8080
 }

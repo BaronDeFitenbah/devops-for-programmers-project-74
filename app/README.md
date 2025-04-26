@@ -4,14 +4,13 @@
 
 ## Requirement
 
-* NodeJS v20.6.1
+* NodeJS v14.18.1
 * Sqlite или PostgreSQL
 
 ## Commands
 
 ```bash
-make install
-make dev
+make setup
 ```
 
 ## Run tests with Postgres
@@ -56,7 +55,6 @@ Export environment variables to work with the database or prepare a *.env* file 
 Run
 
 ```bash
-make build # build assets
 make start # Open in browser: http://localhost:8080
 ```
 

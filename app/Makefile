@@ -1,38 +1,20 @@
-setup: install db-migrate
-
-install:
-	npm install
-
-db-migrate:
-	npm run migrate
-
-build:
-	npm run build
-
-prepare-env:
-	cp -n .env.example .env
+setup:
+	npm ci
 
 start:
-	NODE_ENV=production npm run start
+	npm start
 
 dev:
-	npx concurrently "make start-frontend" "make start-backend"
-
-start-backend:
-	npm start -- --watch --verbose-watch --ignore-watch='node_modules .git .sqlite'
-
-start-frontend:
-	npx webpack --watch --progress
+	npm run dev
 
 lint:
 	npx eslint .
 
-lint-fix:
-	npx eslint --fix .
-
 test:
-	NODE_ENV=test npm test -s
+	npm test
 
-ci: 
-	npm run build
- 
+heroku-logs:
+	heroku logs --tail
+
+prepare-env:
+	cp -n .env.example .env
