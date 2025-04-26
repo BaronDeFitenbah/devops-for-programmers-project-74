@@ -21,4 +21,3 @@ services:
     command: npm run test
     volumes:
       - "./app:/app"
-    image: craz3r/devops-for-programmers-project-74
